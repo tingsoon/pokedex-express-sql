@@ -6,21 +6,25 @@ class Home extends React.Component {
     return (
     	<LayoutContainer>
 	      <div className= "container">
-			 <h1>Add Pokemon</h1>
+	      	<p></p>
+			 <h1>Add Pokémon to Pokédex</h1>
 				<form method="POST" action="/new" >
-				  <p>Pokemon Id: </p>
+				  <p>Pokémon Id: </p>
 				  <input type="number" name="id" min="152"/>
 				  
-				  <p>Pokemon Number: </p>
+				  <p>Pokémon Number: </p>
 				  <input type="text" name="num"/>
 				  
-				  <p>Pokemon Name: </p>
+				  <p>Pokémon Name: </p>
 				  <input type="text" name="name"/>
+
+				  <p>Pokémon Img: </p>
+				  <input type="text" name="img"/>
 				  
-				  <p>Pokemon Weight: </p>
+				  <p>Pokémon Weight: </p>
 				  <input type="text" name="weight"/> kg
 				  
-				  <p>Pokemon Height: </p>
+				  <p>Pokémon Height: </p>
 				  <input type="text" name="height"/> m
 				  <p></p>
 				  <input type="submit" value="Submit"/>

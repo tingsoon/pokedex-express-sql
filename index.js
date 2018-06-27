@@ -42,6 +42,67 @@ app.engine('jsx', reactEngine);
  * ===================================
  */
 
+// Sort by name
+app.put('/pokemon/sortName', (request, response) => {
+
+  let queryString = 'SELECT * FROM pokemon ORDER BY name ASC';
+
+  pool.query(queryString, (err, queryResult) => {
+
+    if (err) {
+      response.status(500).send('error: ' + err.message);
+    } else {
+      // redirect to home page
+      response.redirect('/name');
+      console.log("sort button is clicked.")
+    }
+  });
+});
+
+// Sort by id
+app.put('/pokemon/sortId', (request, response) => {
+
+  let queryString = 'SELECT * FROM pokemon ORDER BY id ASC';
+
+  pool.query(queryString, (err, queryResult) => {
+
+    if (err) {
+      response.status(500).send('error: ' + err.message);
+    } else {
+      // redirect to home page
+      response.redirect('/');
+      console.log("sort button is clicked.")
+    } 
+  });
+});
+
+// display all pokemon by name
+app.get('/name', (req, response) => {
+  // query database for all pokemon
+
+  // respond with HTML page displaying all pokemon
+
+  let queryString = 'SELECT * FROM pokemon ORDER BY name ASC';
+
+  // gather data from postgres
+  pool.query(queryString, (err, result) => {
+
+    let pokeData = result.rows;
+
+    if (err) {
+      console.error('query error:', err.stack);
+    } else {
+
+      const data = {
+        all_pokemon: pokeData
+      };
+
+      // redirect to home page
+      response.render('Home', data);
+    }
+  });
+
+});
 
 
 // add new pokemon
@@ -91,6 +152,30 @@ app.post('/new', (request, response) => {
 //   });
 // });
 
+// display pokemon
+app.get('/:id', (request, response) => {
+
+  let inputId = request.params.id;
+
+  const queryString = 'SELECT * FROM pokemon WHERE id = $1';
+
+  let values = [inputId];
+
+  pool.query(queryString, values, (err, queryResult) => {
+
+    if (err) {
+      response.status(500).send('error: ' + err.message);
+    } else {
+      if (queryResult.rows.length > 0) {
+
+        const pokemon = queryResult.rows[0];
+
+          response.render('showPokemon', pokemon)
+      }
+    }
+
+  });
+});
 
 
 
@@ -152,40 +237,6 @@ app.delete('/:id/delete', (request, response) => {
 });
 
 
-// Sort by name
-app.put('/pokemon/sortName', (request, response) => {
-
-  let queryString = 'SELECT * FROM pokemon ORDER BY name ASC';
-
-  pool.query(queryString, (err, queryResult) => {
-
-    if (err) {
-      response.status(500).send('error: ' + err.message);
-    } else {
-      // redirect to home page
-      response.redirect('/name');
-      console.log("sort button is clicked.")
-    }
-  });
-});
-
-// Sort by id
-app.put('/pokemon/sortId', (request, response) => {
-
-  let queryString = 'SELECT * FROM pokemon ORDER BY id ASC';
-
-  pool.query(queryString, (err, queryResult) => {
-
-    if (err) {
-      response.status(500).send('error: ' + err.message);
-    } else {
-      // redirect to home page
-      response.redirect('/');
-      console.log("sort button is clicked.")
-    } 
-  });
-});
-
 // display all pokemon by id
 app.get('/', (req, response) => {
   // query database for all pokemon
@@ -214,33 +265,6 @@ app.get('/', (req, response) => {
 
 });
 
-// display all pokemon by name
-app.get('/name', (req, response) => {
-  // query database for all pokemon
-
-  // respond with HTML page displaying all pokemon
-
-  let queryString = 'SELECT * FROM pokemon ORDER BY name ASC';
-
-  // gather data from postgres
-  pool.query(queryString, (err, result) => {
-
-    let pokeData = result.rows;
-
-    if (err) {
-      console.error('query error:', err.stack);
-    } else {
-
-      const data = {
-        all_pokemon: pokeData
-      };
-
-      // redirect to home page
-      response.render('Home', data);
-    }
-  });
-
-});
 
 
 

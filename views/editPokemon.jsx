@@ -9,7 +9,7 @@ class Home extends React.Component {
     return (
     	<LayoutContainer>
 	      <div className="container">
-	        <h1>Edit Pokemon</h1>
+	        <h1>Edit Pokémon</h1>
 		        <form method="POST" action={formAction}>
 		        <p>Id: </p>
 		        <input type="number" name="id" />

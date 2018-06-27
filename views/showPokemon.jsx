@@ -4,6 +4,12 @@ var LayoutContainer = require('./layout.jsx');
 class Home extends React.Component {
   render() {
 
+  	const imgStyle = {
+		backgroundColor: '#F2F2F2',
+		'text-align': 'center',
+		'margin': '50px 0',
+  	}
+
   	let formActionEdit = '/' + this.props.id + '/edit?_method=PUT';
   	let formActionDelete = '/' + this.props.id + '/delete?_method=DELETE';
 
@@ -11,7 +17,7 @@ class Home extends React.Component {
     return (
     	<LayoutContainer>
  			<div className="container">
- 				<div className="col-sm pic_container">
+ 				<div className="col-sm pic_container" style={imgStyle}>
 		      	<img src ={this.props.img} />
 		      	</div>
 		      	<div className="col-sm information">
